@@ -1,7 +1,7 @@
 # tclSenseHat
 A tcl library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat
 See https://www.raspberrypi.org/products/sense-hat/
-FOr more information about tcl, see http://www.tcl.tk/
+For more information about tcl, see http://www.tcl.tk/
 
 1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, and 
 
@@ -9,6 +9,8 @@ FOr more information about tcl, see http://www.tcl.tk/
   - demonstration - 
  - dependency: package get_opts
  - dependency: application ImageMagic.  These scripts will output the scrolling pattern to an animated .gif.  This is useful if you intend to use this script without a Raspberry Pi and want to see how it works.  See file animated_gif_demo.gif 
+
+These tcl-only scripts were written to run on the raspberry pi under Linux and have been tested on a PI3B+ only.  They might run under Windows with the ImageMagic software installed, with some motification of the exec commands if you wish only to capture the output to an animated gif rather than the LED Matrix.
 
 2. basic i2c interactions
 
