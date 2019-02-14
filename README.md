@@ -3,6 +3,8 @@ A tcl library (as of this writing, mostly a collection of scripts and procedures
 See https://www.raspberrypi.org/products/sense-hat/
 For more information about tcl, see http://www.tcl.tk/
 
+I would be grateful for any help in organizing this into a proper package, or converting to object oriented notation, or making it generic for any frame buffer device or really anything that might make it useful for others.
+
 1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, and 
 
   -script - SenseHat.tcl - main script for 
