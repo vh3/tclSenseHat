@@ -44,7 +44,7 @@ proc load_defaults {} {
 	set device(width)           8; # width of display, pixels
 	set device(height)          8; # height of display, pixels
 	set device(pause)           500; # approximate viewing time per letter (whether scrolling or pageing)
-	set device(font)            1;   # the script will search for a local file called "font<$device(font)>.tcl"
+	set device(font)            "";   # the script will search for a local file called "font<$device(font)>.tcl"
 	set device(font_data)       ""; # the raw font information
 	set device(mode)            scroll; # values: page or scroll
 	set device(endless)         false
@@ -57,6 +57,7 @@ proc load_defaults {} {
 	set device(gif_zoom)        16; # A factor to scale the output gif files when creating animated gif outputs.
 	set device(gif_tempname)    "_image_";# name of temporary files created while creating gif recording
 	set device(gif_output)      "8x8.gif"; # the name of the output file for animated gif dump of the led screen animation
+	set device(pixel_render)   "circle" ;# shape to render pixels.  The shape can be any letter in the current font, or a list of hex characters defining the shape such as: [split "0x00,0x3c,0x7e,0x7e,0x7e,0x7e,0x3c,0x00" ,]  
 	set device(dump_counter)     0; # automated counter of files.  Internal value.
 	set device(rotation)        0; # rotates the display clockwise (valid values= 90, 180, 270)
 	set device(rotation_definitions) [list {0 {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63}} \
@@ -298,7 +299,7 @@ proc load_font {font_id} {
 		{ } {0x00  0x00  0x00  0x00  0x00  0x00  0x00  0x00 } \
 		!   {0x30  0x78  0x78  0x30  0x30  0x00  0x30  0x00 } \
 		{\"} {0x6C  0x6C  0x28  0x00  0x00  0x00  0x00  0x00 } \
-		{#} {0x6C  0x6C  0xFE  0x6C  0xFE  0x6C  0x6C  0x00 } \
+		{\#} {0x6C  0x6C  0xFE  0x6C  0xFE  0x6C  0x6C  0x00 } \
 		{$} {0x18  0x7E  0xC0  0x7C  0x06  0xFC  0x18  0x00 } \
 		%   {0x00  0xC6  0xCC  0x18  0x30  0x66  0xC6  0x00 } \
 		&   {0x38  0x6C  0x38  0x76  0xDC  0xCC  0x76  0x00 } \
@@ -389,7 +390,19 @@ proc load_font {font_id} {
 		|   {0x18  0x18  0x18  0x00  0x18  0x18  0x18  0x00 } \
 		\}  {0xE0  0x30  0x30  0x1C  0x30  0x30  0xE0  0x00 } \
 		~   {0x76  0xDC  0x00  0x00  0x00  0x00  0x00  0x00 } \
-		\\  {0xC0  0x60  0x30  0x18  0x0C  0x06  0x02  0x00 } ]
+		\\  {0xC0  0x60  0x30  0x18  0x0C  0x06  0x02  0x00 } \
+		"circle"    {0x00 0x3c 0x7e 0x7e 0x7e 0x7e 0x3c 0x00} \
+		"circle2"   {0x00 0x3c 0x7e 0x66 0x66 0x7e 0x3c 0x00} \
+		"circle3"   {0x00 0x3c 0x76 0x66 0x66 0x6e 0x3c 0x00} \
+		"circle4"   {0x00 0x3c 0x42 0x42 0x42 0x42 0x3c 0x00} \
+		"circle5"   {0x00 0x3c 0x1e 0x6e 0x7e 0x7e 0x3c 0x00} \
+		"bear"      {0xc3 0xff 0x5a 0x7e 0x5a 0x66 0x3c 0x00} \
+		"heart"     {0xC0 0x60 0x30 0x18 0x0C 0x06 0x02 0x00} \
+		"plus"      {0x3c 0x3c 0xff 0xff 0xff 0xff 0x3c 0x3c} \
+		"diagonal"  {0xc0 0xe0 0xf8 0x7c 0x3e 0x1f 0x07 0x03} \
+		"vertical"  {0x3c 0x3c 0x3c 0x3c 0x3c 0x3c 0x3c 0x3c} \
+		"horizontal" {0x00 0x00 0xff 0xff 0xff 0xff 0x00 0x00} \
+		"plus"       {0x3c 0x3c 0xff 0xff 0xff 0xff 0x3c 0x3c} ]
 
 		puts "There are [expr [llength $font_data] /2] items in the default font"
 		set device(font_data) $font_data
@@ -713,6 +726,7 @@ proc display display_text {
 
 		# Send this data to the frame buffer
 		set_pixel 0 0 $data $device(syspath) $device(bpp) $device(width)
+		if {$device(record)} {fb2gif}
 
 		set test 0; after $delay {set test 1}; vwait test
 
@@ -1044,6 +1058,7 @@ proc display_path {{path_list ""}} {
 
 			set i [lindex $path $element_counter]
 			set_pixel_id $i $fg_colour $device(syspath) $device(bpp) $device(width)
+			if {$device(record)} {fb2gif}
 			set test 0; after [expr $device(pause)/8] {set test 1}; vwait test	
 
 			# Display the fading tail following the drawn pixel		
@@ -1250,8 +1265,6 @@ proc dump_screen {} {
 	}
 }
 
-
-
 # A procedure to read the frame buffer dump file
 # modified after http://wiki.tcl.tk/1599
 proc fbfile_read filename {
@@ -1424,6 +1437,91 @@ proc colour565to888 colour {
 	return $hex
 }
 
+# A script to render individual pixels in a tiny display into a larger image when
+# saved to an image file, according to a given template. If no template supplied,
+# a circle is used.
+ 
+proc custom_pixel {pixel_data {template ""}} {
+	 
+	global device
+	set height $device(height)
+	set width $device(width)	
+	set bg_colour "#000000"
+	if {$template == ""} {set template $device(pixel_render)}
+	
+	# Check whether the render template is a reference to a font item
+	# Look this up in the font file.  If it is found, use it.
+
+	# It is possible that the font file has not been loaded because we are doing a font lookup out of sequence
+	if {$device(font_data) ==""} {load_font $device(font)}
+	
+	if {[set check [lsearch  $device(font_data) $template]]!=-1} {
+		# puts "Found the pixel_render template ($template) in the font file (check=$check)"
+
+		# Use the lookup value, but but only if it is a lookup value (even numbered list entries).  
+		# The template provided might also be one of the hex definitions already in the file. 
+		if {[expr $check % 2]==0} {
+
+			# Fonts are stored in memory rotated by 270 degrees.  Rotate back 90 degrees to use them here.
+			set template [rotate_hex [lindex $device(font_data) [expr $check + 1]] 90 ]
+		}
+
+	} else {
+
+		# puts "didn't fine '$template' in the font definition"
+		# Assume that the default value is a valid hex definition
+		# Do nothing
+	}
+	# puts "pixel template=$template"
+
+	set template_rows [llength $template]
+	# puts "template=$template"
+
+	set new_pixels ""
+	# iterate over each row of pixels in the original file
+	for {set row 0} {$row < $height} {incr row} {
+		
+		# puts "row=$row"
+		# grab the current row of pixel data
+		set current_row [lindex $pixel_data $row]
+		
+		# iterate over each row of the template
+		for {set template_row 0} {$template_row < $template_rows} {incr template_row} {
+
+			set new_row ""
+
+			# iterate over each individual pixel in this row			
+			# puts "template_row=$template_row"
+
+			# iterate over each of the pixels in our current row of pixel data
+			for {set pixel 0} {$pixel < $width} {incr pixel} {
+
+				# what is the colour of this pixel?
+				set fg_colour [lindex $current_row $pixel]
+				# puts "fg_colour=$fg_colour"
+
+				# what is the hex value for this row definition in the template?
+				set hex_val [lindex $template $template_row]
+				set bin_val [hex2bin $hex_val]
+				set bin_val [split $bin_val ""]
+				# puts "bin_val=$bin_val"
+
+				# map the colours to the zeros and ones of this pixel definition
+				set this_pixel [lmap temp $bin_val {string map "0 $bg_colour 1 $fg_colour" $temp}]
+				# puts "this_pixel=$this_pixel"
+
+				foreach i $this_pixel {	lappend new_row $i}
+			}
+
+			# puts "new_row is now:$new_row"
+			# We now have a complete row of pixel data.  Append it to the image data
+			lappend new_pixels $new_row 				
+		}
+	}
+	
+	return $new_pixels
+}
+
 # A script to export the current frame buffer to a .gif file
 proc fb2gif {{filename ""}} {
 
@@ -1435,11 +1533,11 @@ proc fb2gif {{filename ""}} {
 		# create the dump file
 		incr device(dump_counter)
 		puts "device(dump_counter) is now: $device(dump_counter)"
-		set raw_file "$device(gif_tempname)[format %05d $device(dump_counter)].raw"
-		set gif_file "$device(gif_tempname)[format %05d $device(dump_counter)].gif"
+		set raw_file "[file root $device(gif_tempname)][format %05d $device(dump_counter)].raw"
+		set gif_file "[file root $device(gif_tempname)][format %05d $device(dump_counter)].gif"
 		catch {eval {exec cat $device(syspath) > $raw_file} err}
 
-		} else {
+	} else {
 
 		# We received the name of a raw file that exists on disk already.
 		set raw_file $filename
@@ -1454,15 +1552,21 @@ proc fb2gif {{filename ""}} {
 	# The calling procedure has already called the Tk package
 	# Create an image handle and fill it with data
 	set my_image [image create photo]
+	
+	# Render each input pixel according to a template.  
+	set image_data [custom_pixel $image_data]	
+
+	# load the image data into our image handle
 	$my_image put $image_data
+	$my_image write -format gif $gif_file
 
-	# Make another new image, and copy our original image at the size that we want
-	# (The original image is only 8x8 pixels)
-	set new_image [image create photo]
-	$new_image copy $my_image -zoom $device(gif_zoom)
+#	# Make another new image, and copy our original image at the size that we want
+#	# (The original image is only 8x8 pixels)
+# 	set new_image [image create photo]
+#	$new_image copy $my_image -zoom $device(gif_zoom)
 
-	# Save this to file
-	$new_image write -format gif $gif_file
+#	# Save this to file
+#	$new_image write -format gif $gif_file
 
 	# Delete the dump file
 	catch {file delete $raw_file} err
@@ -1474,25 +1578,34 @@ proc fb2gif {{filename ""}} {
 }
 
 # ----------------------------------------------------
-# Create the .gif file
+# Create the final animated .gif file
+# dependency: imagmagick
 proc gif_assemble {} {
 
 	puts "Processing the output gif animation,"
 	global device
 
-	# Convert all the raw files into individual gif files
-	foreach i [lsort -increasing -dictionary [glob $device(gif_tempname)*.raw]] {
+	# Convert all the raw files into individual gif files, if it has not been done already
+	# If the user manually called fb2gif during execution, this is not necessary.
+	if {![catch {set convert_list [lsort -increasing -dictionary [glob [file root $device(gif_tempname)]*.raw]]   } err ]} {
 		
-		fb2gif $i
+		foreach i  $convert_list {
+		
+			fb2gif $i
+		}		
 	}
 
 	# Call the ImageMagick executable to stitch all the individual files together
-	# If you don't have this installed, use sudo apt-get install ImageMagick
-	# to install this package
+	# If you don't have this installed, use 'sudo apt-get install imagemagick'
+	# to install it
 
 	set output_file [file root $device(gif_output)].gif
-	set command [list exec convert -loop 0 -layers OptimizePlus -set delay 4 $device(gif_tempname)*.gif $output_file]
 
+	# delay is different, depending on the mode
+	if {$device(mode) == "page"} {set delay 100} else {set delay 4}
+
+	# Other options: -layers OptimizePlus
+	set command [list exec convert -loop 0  -set delay $delay -transparent-color black "[file root $device(gif_tempname)]*.gif" $output_file]
 	if {[catch {eval $command} err ]} {
 
 		puts "can't run ImageMagick to create animated gif.  Error was:$err"	
@@ -1501,14 +1614,27 @@ proc gif_assemble {} {
 	
 		puts "display exported to animated gif: $output_file"
 
-		# Delete any temporary gif files			
-		foreach i [lsort -increasing -dictionary [glob $device(gif_tempname)*.gif]] {
+		# Delete any temporary gif files (if they still exist)
+		set pattern "[file root $device(gif_tempname)]*.gif"
+		puts "file delete pattern:$pattern"	
+		set delete_list [lsort -increasing -dictionary [glob $pattern]]
+		puts "There are [llength $delete_list] .gif files in the delete_list"
+		
+		if {![catch { set delete_list [lsort -increasing -dictionary [glob $pattern]] } err]} {
+		
+			foreach i $delete_list {
 
-			if {[catch {file delete $i} err ]} {
-				
-				puts "couldn't delete the temporary gif file:$I.  Error was:$err"
+				if {[catch {file delete $i} err ]} {
+
+					puts "couldn't delete the temporary gif file:$i.  Error was:$err"
+				}
 			}
+		} else {
+			
+				puts "didn't find any .gif files of the pattern '$pattern' to delete"
+			
 		}
+		
 	}
 
 	return

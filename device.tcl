@@ -1,8 +1,7 @@
- # device.tcl - a script to parse parameters from device calls
+# device.tcl - a script to parse parameters from device calls
 # vh, 30 April 2017
 # ----------------------------------------------------------------------
 source SenseHat.tcl
-
 package require cmdline
 
 proc device {action args} {
@@ -12,6 +11,7 @@ proc device {action args} {
 		# TODO: implement a namespace for configuration variables
 
 		# The first arg could be a data string. Check this out.  
+		# TODO: eliminate the possibility that the text string might include - as the first character.
 		set first_arg [lindex $args 0]
 		if {[string index $first_arg 0] != "-"} {
 		
@@ -25,7 +25,7 @@ proc device {action args} {
 		puts $args
 
 		set options {
-			{name.arg         ""       "Name to be used to refer to this device.  TODO: auto setup various parameters from the name"}
+			{name.arg         ""       "Name to be used to device this device.  TODO: auto setup various parameters from the name"}
             {data.arg         ""       "Data to be displayed.  If data is specified, will consume all other parameters, then attempt to display data."}
             {font.arg         1        "font name to load. Will look for a filename called font${arg}.tcl to load.  Font will be loaded immediately."}
 			{font_file.arg    ""        "A filename from which to load font data.  Font will be loaded immediately."}
@@ -51,12 +51,12 @@ proc device {action args} {
 			{package_spi.arg  "piio"    "The package used to interface with spi hardware"}
 			{brightness.arg   8         "pixel brighness, on a scale from 1 to  \$device(max_brighness)."}
 			{brightness_max.arg 10         "The max pixel brighness.  This allows the users to define the brighness scale"}
-			{mode.arg         "scroll"    "display mode.  valid value: scroll, page"}
-			{endless          "false"    "repeat the display of input data endlessly? boolean"}
-			{record            "false"  "capture the output of this action to an animated gif. boolean"}
+			{mode.arg         "scroll"  "display mode.  valid value: scroll, page"}
+			{endless          "false"   "repeat the display of input data endlessly? boolean"}
+			{record.arg       ""        "capture the output of this action to an animated gif. The argument is the filename (.file extension not necessary)"}
 			{path.arg          ""       "current user-defined pixel display path"}
 			{path_list         ""       "a nested list of predefined pixel display paths"}
-			{fade_steps.arg       "1"     "for path display, the number of pixels it takes to fade to zero brightness"}
+			{fade_steps.arg       "1"   "for path display, the number of pixel steps it takes to fade to zero brightness"}
 			{debug             "false"   "this flag will stop the execution of scripts at predefined points and display appropriate messages."}
         }
 
@@ -259,8 +259,17 @@ proc device {action args} {
 				  {record} {
 					  
 					  puts "working on $i: $params($i)"
-					  set device(record) $params($i)
 					  
+					  set device(record) true
+					  if {$params($i) == ""} {
+						  
+						  set device(gif_output) "animated_gif.gif"
+
+					  } else {
+
+						set device(gif_output) [file root $params($i)].gif						  
+					  }
+
 					  # load the Tk package (needed for the gif file manipulation
 					  package require Tk
 					  wm withdraw .
@@ -282,7 +291,8 @@ proc device {action args} {
 				}				
 		}		
 
-		# Consistency checks - some parameters cannot be used together	
+		# Consistency checks - some parameters cannot be used together
+		
 		# -data and -path - we can only do one at a time...
 		
 		# Do something for each action
