@@ -22,7 +22,7 @@ GETTING STARTED
 
 5.  Get software - These scripts depend on the cmdline package which is available in the Tcllib package:
 
-    sudo apt-get install Tcllib
+    sudo apt-get install tcllib
     
 6. Get software - If you intend to experiment with threading (see ex5.tcl), you will need to install the Thread package:
 
