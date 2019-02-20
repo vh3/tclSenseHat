@@ -1,6 +1,7 @@
 # ex1.tcl - device examples for 8X8 LED matrix with text and path elements
 
-# Uncomment examples to try them all.  Some of the best examples are at the end
+# These scripts were intended to run on a Raspberry Pi running a Linux OS
+# Uncomment examples to try them.  Some of the best examples are at the end...
 
 source device.tcl
 
@@ -10,28 +11,24 @@ set device(pause) 200
 
 # EXAMPLE 1 - The simplest example
 device display "This is some scrolling text" 
-pause 1000
 
 # EXAMPLE 2 - A simple Countdown
-device display "9876543210" -mode page -record countdown1 -fg_colour red -bg_colour blue
-pause 1000
+# This example saves an animated .gif of the output to the current folder  with the name "countdown1.gif"
+# You must have installed ImageMAgick in order for this to work (sudo apt-get install imagemagick)
+#device display "9876543210" -mode page -record countdown1 -fg_colour red -bg_colour blue
 
 # EXAMPLE 3 - Text with some configuration parameters
-device display "beep beep!" -rotation 180 -bg_colour "blue" -fg_colour "green" -pause 5 -brightness 8 -mode "scroll" -pause 100
-pause 1000
+#device display "beep beep!" -rotation 180 -bg_colour "blue" -fg_colour "green" -pause 5 -brightness 8 -mode "scroll" -pause 100
 
 # EXAMPLE 4 - Scroll the text in a different direction
-device display "beep beep!" -rotation 90 -fg_colour "white" -pause 5 -brightness 8 -mode "scroll" -pause 100
-pause 1000
+#device display "beep beep!" -rotation 90 -fg_colour "white" -pause 5 -brightness 8 -mode "scroll" -pause 100
 
 # EXAMPLE 5 - Text with many configuration parameters
-device display "Beep! Beep! I'm a sheep said a Beep! Beep! I'm a sheep! Meow! Meow! I'm a cow said a Meow! Meow! I'm a cow"   -rotation 180 -bg_colour black -fg_colour pink -pause 500 -brightness 3 -endless false
-pause 1000
+#device display "Beep! Beep! I'm a sheep said a Beep! Beep! I'm a sheep! Meow! Meow! I'm a cow said a Meow! Meow! I'm a cow"   -rotation 180 -bg_colour black -fg_colour pink -pause 500 -brightness 3 -endless false
 
 # EXAMPLE 6 - Text with many configuration parameters
 # Note the recording switch on the end-the frame buffer is saved to file for compiling into a .gif (dependency: Imagemagick)
-device display "Beep! Beep! I'm a sheep said a Beep! Beep! I'm a sheep! Meow! Meow! I'm a cow said a Meow! Meow! I'm a cow"   -rotation 0 -bg_colour blue -fg_colour pink -delay 1 -brightness 9 -record "image_circles"
-pause 1000
+#device display "Beep! Beep! I'm a sheep said a Beep! Beep! I'm a sheep! Meow! Meow! I'm a cow said a Meow! Meow! I'm a cow"   -rotation 0 -bg_colour blue -fg_colour pink -delay 1 -brightness 9 -record "image_circles" -endless false
 
 # EXAMPLE 7 - Display a shifting random pattern of pixels  
 # for {set x 0} {$x<100} {incr x} {
