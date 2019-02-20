@@ -43,7 +43,7 @@ device display "This is some scrolling text"
 #return
 
 # EXAMPLE 8 - Display a hex image
-# You can create your own hex image at www.xxxxxxxxxx.com
+# You can create your own hex image at http://gurgleapps.com/tools/matrix and copy the hex output here
 # wipe
 # set no_mouth    [rotate_hex [split "0x3e,0x7b,0x8b,0xfb,0xfb,0x8b,0x7b,0x3e" ","] 90]; # no mouth  
 # set device(record) true
