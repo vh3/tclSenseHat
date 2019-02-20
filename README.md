@@ -1,7 +1,8 @@
 # tclSenseHat
-A tcl library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat
-See https://www.raspberrypi.org/products/sense-hat/
-For more information about tcl, see http://www.tcl.tk/
+
+A Tcl (Tool Command Language) library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat.  See https://www.raspberrypi.org/products/sense-hat/. For more information about Tcl , see http://www.tcl.tk/ 
+
+Future: (1) reorganize into a package (2) convert to OO notation (3) replace some of the brute-force efforts with more elegant algorithms.  Anyone interested in the challenge?
 
 GETTING STARTED
 
@@ -18,7 +19,7 @@ GETTING STARTED
 
       sudo get apt-install tclsh
 
-5.  Get sofware - These scripts depend on cmdline package which is available in the Tcllib package:
+5.  Get software - These scripts depend on the cmdline package which is available in the Tcllib package:
 
     sudo apt-get install Tcllib
     
@@ -36,20 +37,20 @@ GETTING STARTED
        sudo raspi-config
        then, choose "Interfacing Options > I2C > Yes (to enable).  Reboot
 
-10.  Get these scripts.  The scripts are not highly organized at the moment and can all be run from the same folder.  I used Geany (Raspberry/Start > Programming > Geany Programmer's Editor).  It comes installed with Raspian) to edit the scripts, and configured Geany to execute the scripts (Tools > Build Commands to RUN tclsh: tclsh8.6 "%f").  Some scripts to try out:
+10.  Get these scripts.  The scripts are not highly organized at the moment and can all be run from the same folder.  I used Geany (It comes installed with Raspian: Raspberry/Start > Programming > Geany Programmer's Editor) to edit the scripts, and configured Geany to execute them (Tools > Build Commands to RUN tclsh: tclsh8.6 "%f").  Some scripts to try out:
 
        ex1.tcl - a collection of examples demonstrating text scrolling, colour patterns and moving pixels
        ex2.tcl - a couple of dynamic rainbows making use of simple math and the hue range
-       ex3.tcl - more hue fun
        ex5.tcl - an experiment with threads - unleashing 6 parallel threads with moving pixels.
        lps25h.tcl - the calculations needed to extract and convert readings from the internal pressure sensor to real readings.
        experiment2_counter.tcl - a 2-digit counter that will allow you to count up to 999 on the 8X8 matrix.
        
-FEATURES
+SENSEHAT FEATURES
 
-1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, and 
+1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, colours and moving pixels.
 
-  -script - SenseHat.tcl - main script for 
+  -script - SenseHat.tcl - main script for procedures
+  - script device.tcl - parses input commands
   - demonstration - 
  - dependency: package get_opts
  - dependency: application ImageMagic.  These scripts will output the scrolling pattern to an animated .gif.  This is useful if you intend to use this script without a Raspberry Pi and want to see how it works.  See file animated_gif_demo.gif 
@@ -71,5 +72,7 @@ These tcl-only scripts were written to run on the raspberry pi under Linux and h
       B.  How to interpret temperature and pressure reading for the LPS25H -                              http://www.st.com/resource/en/technical_note/dm00242306.pdf
       C.  Hardware and software guidelines for use of LPS25H pressure sensor http://www.st.com/content/ccc/resource/technical/document/application_note/a0/f2/a5/e7/58/c8/49/b9/DM00108837.pdf/files/DM00108837.pdf/jcr:content/translations/en.DM00108837.pdf
 
+
+Hoping it will be useful to someone,
 
 @themakerfam
