@@ -50,7 +50,7 @@ GETTING STARTED
 
        experiment2_counter.tcl - a 2-digit counter that will allow you to count up to 999 on the 8X8 matrix.
 
-11.  Learn - about 8X8 fonts.  (1) Download this Windows software from https://www.min.at/prinz/o/software/pixelfont/ for editing 8X8 fonts, them used it to export fonts in .asm format which can be converted to work with these scripts (see script font_convert.tcl). (2) Play with 8X8 images and conver them to hexadecimal representation.  I used this website to make and modify simple images: http://gurgleapps.com/tools/matrix
+11.  Learn - about 8X8 fonts.  (1) Download this Windows software from https://www.min.at/prinz/o/software/pixelfont/ for editing 8X8 fonts, then use it to export your favourite font in .asm format so it can be converted to work with these scripts (see script font_convert.tcl). (2) Play with 8X8 images and conver them to hexadecimal representation.  I used this website to make and modify simple images: http://gurgleapps.com/tools/matrix
 
 SENSEHAT FEATURES
 
