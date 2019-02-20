@@ -24,6 +24,7 @@ GETTING STARTED
     sudo apt-get install Tcllib
     
 6. Get software - If you intend to experiment with threading (see ex5.tcl), you will need to install the Thread package:
+
     sudo apt-get install tcl-thread
 
 7.  Get software - if you want to use the functionality for creating scrolling animated .gif's, you will need to install ImageMagick:
@@ -34,15 +35,18 @@ GETTING STARTED
 
 9.  Enable i2c protocol - i2c must be enabled 
 
-       sudo raspi-config
-       then, choose "Interfacing Options > I2C > Yes (to enable).  Reboot
+       sudo raspi-config, then, choose "Interfacing Options > I2C > Yes (to enable).  Reboot
 
 10.  Get these scripts.  The scripts are not highly organized at the moment and can all be run from the same folder.  I used Geany (It comes installed with Raspian: Raspberry/Start > Programming > Geany Programmer's Editor) to edit the scripts, and configured Geany to execute them (Tools > Build Commands to RUN tclsh: tclsh8.6 "%f").  Some scripts to try out:
 
        ex1.tcl - a collection of examples demonstrating text scrolling, colour patterns and moving pixels
+       
        ex2.tcl - a couple of dynamic rainbows making use of simple math and the hue range
+
        ex5.tcl - an experiment with threads - unleashing 6 parallel threads with moving pixels.
+
        lps25h.tcl - the calculations needed to extract and convert readings from the internal pressure sensor to real readings.
+
        experiment2_counter.tcl - a 2-digit counter that will allow you to count up to 999 on the 8X8 matrix.
        
 SENSEHAT FEATURES
