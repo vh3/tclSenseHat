@@ -1,12 +1,12 @@
 # tclSenseHat
 
-A Tcl (Tool Command Language) library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat.  See https://www.raspberrypi.org/products/sense-hat/. For more information about Tcl , see http://www.tcl.tk/ 
+A Tcl (Tool Command Language) library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat mounted on a Raspberry Pi running a variant of the Linux operating system called Raspbian.  See https://www.raspberrypi.org/products/sense-hat/. For more information about Tcl , see http://www.tcl.tk/ 
 
 Future: (1) reorganize into a package (2) convert to OO notation (3) replace some of the brute-force efforts with more elegant algorithms.
 
 GETTING STARTED
 
-1. Get hardware - a working Raspberry Pi running some recent version of Raspbian operating system.  I have been buying mine in Canada from www.buyapi.ca, but most electronics shops are selling them nowadays. There are good instructions for setting them up here:  https://www.raspberrypi.org/documentation/.  Also many, many youtube videos.
+1. Get hardware - a working Raspberry Pi running some recent version of Raspbian operating system.  I have been buying mine in Canada from www.buyapi.ca, but most online electronics shops are selling them nowadays. There are good instructions for setting them up here:  https://www.raspberrypi.org/documentation/.  Also many, many youtube videos.  These scripts were developed on a Pi 3B and 3B+, but have been found to work just fine on the $10 Pi Zero W.  Everyone should have one of these.
 
 2. Get hardware - a SenseHat (a compatible module that sits on top of the Raspberry Pi, also manufactured by www.raspberrypi.org).  See some info here: https://www.raspberrypi.org/blog/sense-hat-projects/ - This Hat contains an 8X8 LED matrix, a number of sensors, buttons and a mini-joystick.  This device has been to the International Space Station and has been the subject of national coding competitive challenges in the UK.  I bought mine from www.adafruit.com in North America.  There is a SenseHat emulator in recent versions of Raspbian for python coders.  I have no idea if it can be driven from Tcl. See here: https://www.raspberrypi.org/magpi/sense-hat-emulator/
 
@@ -54,7 +54,7 @@ GETTING STARTED
 
 SENSEHAT FEATURES
 
-1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, colours and moving pixels.
+1. LED Matrix display - the SenseHat has an 8X8 matrix led display.  This respository includes scripts and procedures that display scrolling text of various kinds, colours and moving pixels.  We pass command prompt frame buffer commands via exec to interact with the OS.  IF there are more sophisticated and faster ways to make Tcl work with the frame buffer, I'm interested in knowing. 
 
   -script - SenseHat.tcl - main script for procedures
   - script device.tcl - parses input commands
@@ -79,6 +79,7 @@ These tcl-only scripts were written to run on the raspberry pi under Linux and h
       B.  How to interpret temperature and pressure reading for the LPS25H -                              http://www.st.com/resource/en/technical_note/dm00242306.pdf
       C.  Hardware and software guidelines for use of LPS25H pressure sensor http://www.st.com/content/ccc/resource/technical/document/application_note/a0/f2/a5/e7/58/c8/49/b9/DM00108837.pdf/files/DM00108837.pdf/jcr:content/translations/en.DM00108837.pdf
 
+4.  Haven't gotten to the gyro/,mag/accel calculations.  Interested in seeing if creating IMU is possible.  There are a ton of people developing IMU libraries here on github.
 
 Hoping it will be useful to someone, grateful for any help.
 
