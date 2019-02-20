@@ -35,30 +35,30 @@ proc load_defaults {} {
 	set device(package_gpio)    piio
 	set device(package_i2c)     piio
 	set device(package_spi)     piio
-	set device(brightness)     10 ; # value from 1-8 (zero is also valid, but not useful)
-	set device(brightness_max) 10.0 ;# the reference value for maximum brighness values. This must have a decimal place
-	set device(fg_colour)      "white"
-	set device(bg_colour)       "pink"
-	set device(syspath)          "/dev/fb1" ; # path to linux device
+	set device(brightness)      10 ; # value from 1-8 (zero is also valid, but not useful)
+	set device(brightness_max)  10.0 ;# the reference value for maximum brighness values. This must have a decimal place
+	set device(fg_colour)       "pink"
+	set device(bg_colour)       "black"
+	set device(syspath)         "/dev/fb1" ; # path to linux device
 	set device(bpp)             2; # bytes per pixel (the SenseHat uses r=5 bits, g=6 bits, g=5 bits=16 bits=2 bytes
 	set device(width)           8; # width of display, pixels
 	set device(height)          8; # height of display, pixels
-	set device(pause)           500; # approximate viewing time per letter (whether scrolling or pageing)
-	set device(font)            "";   # the script will search for a local file called "font<$device(font)>.tcl"
+	set device(pause)           100; # approximate viewing time per letter (whether scrolling or pageing) in milliseconds
+	set device(font)            "";   # the script will search for a local file called "font<$device(font)>.tcl".  Otherwise, it will use an internal default font definition
 	set device(font_data)       ""; # the raw font information
 	set device(mode)            scroll; # values: page or scroll
 	set device(endless)         false
-	set device(colour_file)     ""; # the script will read a local file for colour definitions.
+	set device(colour_file)     ""; # the script will read a local file for colour definitions.  Otherwise a set of default internal colour definitions will be loaded.
 	set device(colours)         ""
-	set device(fade_steps)       5; # the number of steps it takes a pixel in a path to fade
+	set device(fade_steps)      5; # the number of steps it takes a pixel in a path to fade, when a path  definition is being used.
 	set device(path)            ""   ;# currently defined pixel display path
 	set device(path_list)       ""   ; # the list of all predefined pixel display paths
 	set device(record)          false; # set this flag to dump the output of the display to an animated .gif file
 	set device(gif_zoom)        16; # A factor to scale the output gif files when creating animated gif outputs.
 	set device(gif_tempname)    "_image_";# name of temporary files created while creating gif recording
 	set device(gif_output)      "8x8.gif"; # the name of the output file for animated gif dump of the led screen animation
-	set device(pixel_render)   "circle" ;# shape to render pixels.  The shape can be any letter in the current font, or a list of hex characters defining the shape such as: [split "0x00,0x3c,0x7e,0x7e,0x7e,0x7e,0x3c,0x00" ,]  
-	set device(dump_counter)     0; # automated counter of files.  Internal value.
+	set device(pixel_render)    "circle" ;# shape to render pixels.  The shape can be any letter in the current font, or a list of hex characters defining the shape such as: [split "0x00,0x3c,0x7e,0x7e,0x7e,0x7e,0x3c,0x00" ,]  
+	set device(dump_counter)    0; # automated counter of files.  Internal value.
 	set device(rotation)        0; # rotates the display clockwise (valid values= 90, 180, 270)
 	set device(rotation_definitions) [list {0 {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63}} \
 {90 {7 15 23 31 39 47 55 63 6 14 22 30 38 46 54 62 5 13 21 29 37 45 53 61 4 12 20 28 36 44 52 60 3 11 19 27 35 43 51 59 2 10 18 26 34 42 50 58 1 9 17 25 33 41 49 57 0 8 16 24 32 40 48 56}} \
@@ -77,7 +77,7 @@ proc colour_load {} {
 	if {[catch {source $device(colour_file)} err]} {
 
 		# A collection of 30 basic colours / random selection of colour names that made the kids curious.
-		# Find 700+ more colour names at: http://latexcolor.com/
+		# Find 700+ more colour names and definitions at: http://latexcolor.com/
 
 		set device(colours) [list \
 		{{Colour Name} Description         {3-byte hex colour} r g b} \
@@ -155,8 +155,8 @@ proc colour888to565 input_rgb {
 }
 
 # increment the values of a list by a prescribed increment.
-# Inputs are expected 0 < x < 1, and outputs are returned 0< x < 1
-# This procedure is used mainly for manipulating hue values
+# Inputs are expected 0 < x < 1, and outputs are returned 0 < x < 1
+# This procedure is used for endlessly cycling through hue values
 proc incrlist {mylistvar {increment_val 1.}} {
 	
 	upvar $mylistvar mylist
@@ -174,7 +174,7 @@ proc incrlist {mylistvar {increment_val 1.}} {
 	return $new_list	
 }
 
-# proc to convert hsv model colour definition to an rgb value (where 0<= r,g,b <=1).  
+# proc to convert hsv model colour definition to an rgb value (where 0 <= r,g,b <=1).  
 # Code after: http://code.activestate.com/recipes/133527-convert-hsv-colorspace-to-rgb/
 proc hsv2rgb {h s v} {
   if {$s <= 0.0} {
