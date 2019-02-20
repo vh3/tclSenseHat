@@ -81,6 +81,8 @@ These tcl-only scripts were written to run on the raspberry pi under Linux and h
 
 4.  Haven't gotten to the gyro/,mag/accel calculations.  Interested in seeing if creating IMU is possible.  There are a ton of people developing IMU libraries here on github.  This one (written in python for the SenseHat seems a likely candidate to port from python: https://github.com/astro-pi/apollo-soyuz
 
+5.  We have not figured out how to use Tcl to get input from the buttons.  Ideas?
+
 Hoping it will be useful to someone, grateful for any help.
 
 @themakerfam
