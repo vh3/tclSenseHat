@@ -79,7 +79,7 @@ These tcl-only scripts were written to run on the raspberry pi under Linux and h
       B.  How to interpret temperature and pressure reading for the LPS25H -                              http://www.st.com/resource/en/technical_note/dm00242306.pdf
       C.  Hardware and software guidelines for use of LPS25H pressure sensor http://www.st.com/content/ccc/resource/technical/document/application_note/a0/f2/a5/e7/58/c8/49/b9/DM00108837.pdf/files/DM00108837.pdf/jcr:content/translations/en.DM00108837.pdf
 
-4.  Haven't gotten to the gyro/,mag/accel calculations.  Interested in seeing if creating IMU is possible.  There are a ton of people developing IMU libraries here on github.
+4.  Haven't gotten to the gyro/,mag/accel calculations.  Interested in seeing if creating IMU is possible.  There are a ton of people developing IMU libraries here on github.  This one (written in python for the SenseHat seems a likely candidate to port from python: https://github.com/astro-pi/apollo-soyuz
 
 Hoping it will be useful to someone, grateful for any help.
 
