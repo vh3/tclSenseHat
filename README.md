@@ -13,6 +13,7 @@ GETTING STARTED
 3.  Update Operating System - Make sure you have the most up-to-date operating system.  You can do this by opening up a command prompt window ("Raspberry/Start" icon > Accessories > Terminal) and using the following commands:
 
        sudo apt-get update
+       
        sudo apt-get upgrade
 
 4.  Get software - Tcl - I used v8.6 in making these scripts.  These scripts do not make use of Tk yet.  Tcl is usually installed on Raspbian operating systems,  however, you can install the latest available version: 
