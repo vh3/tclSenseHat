@@ -2,7 +2,7 @@
 
 A Tcl (Tool Command Language) library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat.  See https://www.raspberrypi.org/products/sense-hat/. For more information about Tcl , see http://www.tcl.tk/ 
 
-Future: (1) reorganize into a package (2) convert to OO notation (3) replace some of the brute-force efforts with more elegant algorithms.  Anyone interested in the challenge?
+Future: (1) reorganize into a package (2) convert to OO notation (3) replace some of the brute-force efforts with more elegant algorithms.
 
 GETTING STARTED
 
@@ -78,6 +78,6 @@ These tcl-only scripts were written to run on the raspberry pi under Linux and h
       C.  Hardware and software guidelines for use of LPS25H pressure sensor http://www.st.com/content/ccc/resource/technical/document/application_note/a0/f2/a5/e7/58/c8/49/b9/DM00108837.pdf/files/DM00108837.pdf/jcr:content/translations/en.DM00108837.pdf
 
 
-Hoping it will be useful to someone,
+Hoping it will be useful to someone, grateful for any help.
 
 @themakerfam
