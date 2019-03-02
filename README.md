@@ -18,7 +18,7 @@ GETTING STARTED
 
 4.  Get software - Tcl - I used v8.6 in making these scripts.  These scripts do not make use of Tk yet.  Tcl usually comes pre-installed on Raspbian operating systems,  however, you can install the latest available version: 
 
-      sudo get apt-install tclsh
+      sudo apt-get install tclsh
 
 5.  Get software - These scripts depend on the cmdline package which is available in the Tcllib package:
 
