@@ -34,7 +34,7 @@ GETTING STARTED
 
 8.  Get software - If you want to use the onboard sensors via i2c (lps25h.tcl script for example), you will need to install the piio package for communicating over i2c.  You will need to download source, make and install this package yourself.  There are instructions here: http://chiselapp.com/user/schelte/repository/piio/index.  Some other examples of piio usage can be found on the www.tcl.tk wiki here: https://wiki.tcl-lang.org/page/piio. 
 
-9.  Enable i2c protocol - i2c must be enabled 
+9.  Enable i2c protocol - i2c must be enabled in the OS before you can use it. 
 
        sudo raspi-config, then, choose "Interfacing Options > I2C > Yes (to enable).  Reboot
 
