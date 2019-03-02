@@ -1,5 +1,7 @@
 # tclSenseHat
 
+2 Mar 2019
+
 A Tcl (Tool Command Language) library (as of this writing, mostly a collection of scripts and procedures) for interacting with the Raspberry Pi SenseHat mounted on a Raspberry Pi running a variant of the Linux operating system called Raspbian.  See https://www.raspberrypi.org/products/sense-hat/. For more information about Tcl , see http://www.tcl.tk/ 
 
 Future: (1) reorganize into a package (2) convert to OO notation (3) replace some of the brute-force efforts with more elegant algorithms.
